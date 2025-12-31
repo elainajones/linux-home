@@ -15,8 +15,6 @@ rm -rf var/cache/*
 time tar --exclude='var/lib/libvirt/images' \
     --exclude='usr/src' \
     --exclude='tmp/*' \
-    --exclude='var/db/repos' \
-    --exclude='var/db/pkg' \
     -cvf $(cat etc/hostname)-rootfs-$(date +%Y%m%d).tar \
     ${root_dirs[*]} swapfile
 
