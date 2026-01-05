@@ -1,0 +1,36 @@
+[Added Associations]
+text/plain=vim.desktop;libreoffice-writer.desktop;wine-extension-txt.desktop;
+image/png=zzz-gimp.desktop;org.inkscape.Inkscape.desktop;org.xfce.ristretto.desktop;
+application/pdf=firefox-esr.desktop;google-chrome.desktop;zzz-gimp.desktop;atril.desktop;org.inkscape.Inkscape.desktop;com.github.jeromerobert.pdfarranger.desktop;xournal.desktop;firefox.desktop;
+image/jpeg=zzz-gimp.desktop;firefox-esr.desktop;org.xfce.ristretto.desktop;
+image/gif=zzz-gimp.desktop;org.xfce.ristretto.desktop;
+application/x-ms-dos-executable=wine.desktop;
+application/x-ms-shortcut=wine.desktop;firefox-esr.desktop;
+application/gzip=xournal.desktop;
+text/html=firefox-esr.desktop;
+text/markdown=vim.desktop;
+audio/flac=vlc.desktop;spek.desktop;
+application/x-mimearchive=google-chrome.desktop;firefox-esr.desktop;
+image/bmp=zzz-gimp.desktop;
+application/x-shellscript=vim.desktop;xfce4-terminal.desktop;
+image/x-tga=zzz-gimp.desktop;
+application/x-zerosize=vim.desktop;
+image/webp=zzz-gimp.desktop;firefox-esr.desktop;
+video/webm=firefox-esr.desktop;vlc.desktop;
+video/mp4=vlc.desktop;avidemux-2.7.desktop;
+video/x-matroska=vlc.desktop;avidemux-2.7.desktop;
+video/quicktime=vlc.desktop;com.ozmartians.VidCutter.desktop;
+
+[Default Applications]
+image/jpeg=org.xfce.ristretto.desktop
+image/gif=org.xfce.ristretto.desktop
+application/x-ms-dos-executable=wine.desktop
+application/x-ms-shortcut=firefox-esr.desktop
+application/gzip=xournal.desktop
+application/x-mimearchive=firefox-esr.desktop
+image/png=org.xfce.ristretto.desktop
+application/x-zerosize=vim.desktop
+x-scheme-handler/discord-363427101346627584=discord-363427101346627584.desktop
+x-scheme-handler/http=firefox-esr.desktop
+x-scheme-handler/https=firefox-esr.desktop
+image/webp=firefox-esr.desktop
