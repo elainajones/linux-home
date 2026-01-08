@@ -23,7 +23,6 @@ time tar --exclude='var/lib/libvirt/images' \
     --exclude='usr/src' \
     --exclude='tmp/*' \
     --exclude='var/tmp/*' \
-    --exclude='var/spool' \
     --exclude='__pycache__/*' \
     --exclude='*\.iso' \
     --exclude='var/*\.log' \
