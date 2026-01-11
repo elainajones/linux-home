@@ -132,13 +132,9 @@ main() {
     sudo mkfs.vfat -F32 $efi_part;
     confirm_yes "$root_part: format luks? (y/N): " || exit 0;
     sudo cryptsetup luksFormat --block-size 512 $root_part;
-    echo "";
+    echo "Decryting new crypt device";
     sleep 1;
-    list_block $output_file;
-    lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
-    confirm_yes "$root_part: decrypt root? (y/N): " || exit 0;
     sudo cryptsetup luksOpen $root_part crypt-root;
-    echo "";
     sleep 1;
     list_block $output_file;
     lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
@@ -154,80 +150,59 @@ main() {
     list_block $output_file;
     lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
     confirm_yes "$input_file: Extract to /mnt/chroot? (y/N): " || exit 0;
-    sudo tar -xvf $input_file -C /mnt/chroot;
+    sudo tar -xpvf $input_file --xattrs-include='*.*' --numeric-owner -C /mnt/chroot;
     echo "";
     sleep 1;
     list_block $output_file;
     lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
-    echo "Update /etc/fstab /boot UUID";
+    printf "Current /boot "
     cat /mnt/chroot/etc/fstab | grep -P "^UUID.+\s/boot\s" | grep "";
-    confirm_yes "Edit fstab (copy efi UUID)? (y/N): " || exit 0;
+    confirm_yes "Open /etc/fstab for editing (replace /boot UUID with actual) (y/N): " || exit 0;
     sudo vim /mnt/chroot/etc/fstab;
 
-    echo "Update /etc/fstab / UUID";
+    printf "Current / "
     cat /mnt/chroot/etc/fstab | grep -P "^UUID.+\s/\s" | grep "";
     root_uuid=$(\
         cat /mnt/chroot/etc/fstab | \
         grep -P "^UUID.+\s/\s" | \
-        grep -oP "(?<=UUID\=)\S+" \
+        grep -oP "(?<=UUID\=)\S+" | \
+	tr -d "\"'" \
     );
     efi_uuid=$(\
         cat /mnt/chroot/etc/fstab | \
         grep -P "^UUID.+\s/boot\s" | \
-        grep -oP "(?<=UUID\=)\S+" \
+        grep -oP "(?<=UUID\=)\S+" | \
+	tr -d "\"'" \
     );
 
-    echo "Enter UUID for '/'";
+    echo "Enter UUID for '/' (replaces current UUID)";
     read -p "($root_uuid):" opt;
     [[ $opt == "" ]] || root_uuid=$opt;
 
-    echo "";
-    sleep 1;
-    list_block $output_file;
-    lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
-    echo "\: UUID=$root_uuid";
-    confirm_yes "/dev/mapper/crypt-root: Change UUID? (y/N): " || exit 0;
-
     sudo umount -v /mnt/chroot/boot;
     sudo umount -v /mnt/chroot;
-
-    echo "";
-    sleep 1;
-    list_block $output_file;
-    lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
-    confirm_yes "Continue? (y/N): " || exit 0;
-
     sudo e2fsck -f /dev/mapper/crypt-root;
-    sudo tune2fs -U $root_uuid /dev/mapper/crypt-root
+    sudo tune2fs -U "$root_uuid" /dev/mapper/crypt-root
     sudo mount -v /dev/mapper/crypt-root /mnt/chroot;
 
     echo "";
     sleep 1;
     list_block $output_file;
     lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
-    cat /mnt/chroot/etc/default/grub | grep "crypt_root=UUID";
-    crypt_uuid=$(\
+
+    printf "Current crypt UUID "
+    cat /mnt/chroot/etc/default/grub | grep -oP "^[^#\s].+crypt_root=\S+" | grep -oP "UUID=\S+";
+    crypt_uuid=($(\
     	cat /mnt/chroot/etc/default/grub | \
 	grep -oP "(?<=crypt_root=UUID=)\S+" \
-    );
-    echo "Enter UUID for '$root_part'";
+    ));
+    crypt_uuid="${crypt_uuid[0]}"
+    echo "Enter crypt UUID for '$root_part' (replaces current UUID)";
     read -p "($crypt_uuid):" opt;
     [[ $opt == "" ]] || crypt_uuid=$opt;
 
-    echo "";
-    sleep 1;
-    list_block $output_file;
-    lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
-    echo $root_part: UUID=$crypt_uuid;
-    confirm_yes "$root_part: Change UUID? (y/N): " || exit 0;
-
     sudo umount -v /mnt/chroot;
-    echo "";
-    sleep 1;
-    list_block $output_file;
-    lsblk -o name,fstype,size,mountpoints,uuid | grep "crypt-root" | grep ""
-    confirm_yes "Continue? (y/N): " || exit 0;
-    sudo cryptsetup luksUUID $root_part --uuid "$crypt_uuid"
+    sudo cryptsetup luksUUID "$root_part" --uuid "$crypt_uuid"
 
     echo "";
     list_block $output_file;
