@@ -34,6 +34,7 @@ set autoindent
 set hlsearch
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
+set belloff=all
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
@@ -225,5 +226,5 @@ let save_cursor = getpos(".")
 endfun
 augroup clean_spaces
     autocmd!
-    autocmd BufWritePre *.py,*.sh,*.robot,*.txt,*.ps1 :call CleanExtraSpaces()
+    autocmd BufWritePre *.py,*.sh,*.robot,*.txt,*.ps1,*.json :call CleanExtraSpaces()
 augroup END
