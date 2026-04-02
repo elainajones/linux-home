@@ -29,6 +29,20 @@ alias gba='grep -P "^alias" ~/.bash_aliases'
 alias grepin='grep --exclude=*xml --exclude=*html --exclude-dir=.venv --exclude-dir=venv --exclude-dir=__pycache__ --exclude-dir=.git -RniIP'
 
 # Functions:
+# git {{{
+git() { # override aliases: https://stackoverflow.com/a/79212558/519360
+   if [[ $1 == -- || $1 == command ]]; then # do NOT override aliases
+     shift
+   elif command git config --get "alias.alias-$1" >/dev/null 2>&1; then
+    if [[ $2 == -h ]]; then
+      command git alias-"$@" 2>&1 |sed "/^'alias-$1'/!d; s//'$1'/; s/$/\n/"
+    elif [[ $2 != --help ]]; then
+      set -- alias-"$@"
+    fi
+  fi
+  command git "$@"
+}
+# }}}
 # passgen {{{
 passgen() {
     declare pw_len=${1:-20};
@@ -36,7 +50,7 @@ passgen() {
     declare -A profile=(\
         ["1"]="{}[]<>~_\\-\\\\/|:=+?" \
     );
-    
+
     rm_chars="\n;,.\"\`\'";
     if [[ "$2" ]]; then
         rm_chars+="${profile[$2]}";
@@ -46,7 +60,7 @@ passgen() {
     # https://stackoverflow.com/questions/27799024
     pass=$(LC_CTYPE=C < /dev/urandom tr -cd [:graph:] |\
         tr -d "$rm_chars" | fold -w $pw_len | head -n 1);
-    
+
     echo $pass | less;
 }
 # }}}
@@ -56,7 +70,7 @@ cstash() {
     data="/home/$(whoami)/bin/cstash.dat";
     mkdir -p $(dirname $data) && touch $data;
     source $data;
-    
+
     if ! [[ "$1" ]]; then
         true
     elif [[ -e "$path" ]]; then
@@ -149,7 +163,7 @@ chrootm() {
     else
         printf "Invalid option\n";
     fi
-    
+
     unset opt
 }
 # }}}

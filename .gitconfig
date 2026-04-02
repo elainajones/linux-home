@@ -12,6 +12,8 @@
     s=status
     shove=push -f
     aa=commit --amend --author="Elaina Jones <133198355+elainajones@users.noreply.github.com>"
+    # overrides via shell function: https://stackoverflow.com/a/79212558/519360
+    alias-diff = difftool
 [commit]
 	gpgsign = true
 [init]
