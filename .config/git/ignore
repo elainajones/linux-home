@@ -1,0 +1,35 @@
+##################################################
+# OS
+##################################################
+# Windows swap file (Excel)
+# These files can break WSL git since they become
+# impossible to remove if they show up unless ignored
+*~
+
+##################################################
+# Editors
+##################################################
+# VIM
+.tags
+*.swp
+# Visual Studio
+.vs/
+# PyCharm
+.idea
+
+##################################################
+# Languages / Python
+##################################################
+# Temp files
+*__pycache__/
+*.py[cod]
+# Virtual environments
+myvenv/
+venv/
+.venv/
+# Pyinstaller build files
+*.spec
+dist/
+build/
+# Testing
+.coverage

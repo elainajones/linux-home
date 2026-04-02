@@ -16,3 +16,15 @@
 	gpgsign = true
 [init]
 	defaultBranch = main
+[core]
+    # Disable in favor of gitattributes
+	autocrlf = false
+    # Enforce defaults
+	excludesFile = ~/.config/git/ignore
+    attributesFile = ~/.config/git/attributes
+[merge]
+	tool = vimdiff1
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
