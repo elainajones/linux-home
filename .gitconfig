@@ -12,6 +12,22 @@
     s=status
     shove=push -f
     aa=commit --amend --author="Elaina Jones <133198355+elainajones@users.noreply.github.com>"
+    rmc=rm --cached -r
+    diff-file-last-commit = "!f() { \
+        project_root_dir=$(git rev-parse --show-toplevel); \
+        echo finding full file path of $1 in $project_root_dir; \
+        filepath=$(find $project_root_dir -type f -name $1); \
+        echo full file path $filepath; \
+        last_modified_commit_hash=$(git rev-list -1 HEAD $filepath); \
+        echo last commit file modified $last_modified_commit_hash; \
+        git difftool $last_modified_commit_hash^ $filepath; \
+    }; f"
+	serve = !"f() { \
+        project_root_dir=$(basename `git rev-parse --show-toplevel`); \
+        myip=$(ip -4 -o -br a | grep -oP '(?<=UP).+?(?=/)' | tr -d ' \n'); \
+        echo \"serving git://${myip}/${project_root_dir}\"; \
+        git daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/; \
+    }; f"
     # overrides via shell function: https://stackoverflow.com/a/79212558/519360
     alias-diff = difftool
 [commit]
