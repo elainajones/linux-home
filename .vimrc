@@ -118,6 +118,9 @@ highlight ALEVirtualTextWarning ctermbg=none ctermfg=yellow
 highlight ALEErrorSign ctermbg=none ctermfg=red
 highlight ALEWarningSign ctermbg=none ctermfg=yellow
 " }}}
+" Gutentags {{{
+let g:gutentags_ctags_tagfile='.tags'
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keymapping
