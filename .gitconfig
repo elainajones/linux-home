@@ -3,9 +3,10 @@
     # if ssh key auth is not permitted by policy.
 	helper = store
 [user]
+	useConfigOnly = true
 	email = 133198355+elainajones@users.noreply.github.com 
 	name = Elaina Jones
-	signingkey = 42A1B190F99555C1
+	signingKey = 42A1B190F99555C1
 [alias]
     lg = log --color --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     co=checkout
@@ -31,7 +32,7 @@
     # overrides via shell function: https://stackoverflow.com/a/79212558/519360
     alias-diff = difftool
 [commit]
-	gpgsign = true
+	gpgSign = true
 [init]
 	defaultBranch = main
 [core]
@@ -46,3 +47,11 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
+[submodule]
+	fetchJobs = 0
+[fetch]
+	parallel = 0
+[checkout]
+	workers = 0
+[branch]
+	sort = -creatordate
