@@ -10,6 +10,7 @@ alias lsd='ls -d */'
 
 alias sba='source ~/.bash_aliases; exec bash'
 alias vba='vim ~/.bash_aliases'
+alias vgc='vim ~/.git-credentials'
 alias vsc='vim ~/.ssh/config'
 
 alias rkh='ssh-keygen -R'
@@ -19,26 +20,27 @@ alias gpge='gpg --armour -e'
 alias ipleak='curl https://ipleak.net/json/'
 
 # (un)mount mtp devices (ie Android)
-alias mmtp='jmtpfs ~/mtp && echo Device mounted at ~/mtp/ && thunar ~/mtp/'
+alias mmtp='jmtpfs ~/mnt/mtp && echo Device mounted at ~/mnt/mtp/ && thunar ~/mnt/mtp/'
 alias ummtp='fusermount -u ~/mtp/'
 
+alias cping='ping -c 2 www.gentoo.org'
 alias oprts='sudo netstat -ntupl'
 
 alias ghist='history | grep'
 alias gba='grep -P "^alias" ~/.bash_aliases'
 alias grepin='grep --exclude=*xml --exclude=*html --exclude-dir=.venv --exclude-dir=venv --exclude-dir=__pycache__ --exclude-dir=.git -RniIP'
 
-# Functions:
+# Functions
 # git {{{
 git() { # override aliases: https://stackoverflow.com/a/79212558/519360
-   if [[ $1 == -- || $1 == command ]]; then # do NOT override aliases
-     shift
-   elif command git config --get "alias.alias-$1" >/dev/null 2>&1; then
-    if [[ $2 == -h ]]; then
-      command git alias-"$@" 2>&1 |sed "/^'alias-$1'/!d; s//'$1'/; s/$/\n/"
-    elif [[ $2 != --help ]]; then
-      set -- alias-"$@"
-    fi
+    if [[ $1 == -- || $1 == command ]]; then # do NOT override aliases
+        shift
+    elif command git config --get "alias.alias-$1" >/dev/null 2>&1; then
+        if [[ $2 == -h ]]; then
+            command git alias-"$@" 2>&1 |sed "/^'alias-$1'/!d; s//'$1'/; s/$/\n/"
+        elif [[ $2 != --help ]]; then
+            set -- alias-"$@"
+        fi
   fi
   command git "$@"
 }
@@ -93,7 +95,7 @@ cpop() {
 
     if [[ ${#CSTASH[@]} > 0 ]]; then
         path="${CSTASH[-1]}";
-        cp -rvp $path $PWD
+        cp -rvp $path .
         unset 'CSTASH[-1]';
         echo "${CSTASH[@]}"
 
@@ -111,8 +113,8 @@ cpop() {
 # ovpn {{{
 ovpn() {
     declare opt=$1;
-    declare root_dir="/etc/openvpn/ovpn-locations";
-    configs=($(ls $root_dir/*));
+    declare root_dir="/etc/openvpn/ovpn-configs";
+    configs=($(ls $root_dir/*.conf));
 
     if ! [[ "$opt" ]]; then
         for i in $(seq 0 $((${#configs[@]}-1))); do
@@ -194,17 +196,6 @@ mcc() {
     done;
 }
 # }}}
-# tres {{{
-tres() {
-    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
-        echo "Usage: tres [dir:-pwd] [depth:-2] [optional tree flag]"
-    else
-        tree -aFCthR ${3} --dirsfirst --du --filelimit 200 \
-            -L ${2:-2} -I ".git|*.swp" ${1:-$pwd} | \
-            less -~KMQR-;
-    fi
-}
-#}}}
 # lac {{{
 lac() {
     declare -i total=$(la ${1:-$pwd} | wc -l);
@@ -234,7 +225,7 @@ md2pdf() {
         -V mainfont="DejaVu Serif" \
         -V monofont="DejaVu Sans Mono" \
         --pdf-engine=xelatex \
-        --highlight-style ~/bin/monochrome.theme \
+        --highlight-style ~/bin/custom.theme \
         --include-in-header ~/bin/chapter-break.tex \
         --include-in-header ~/bin/inline-code.tex \
         --include-in-header ~/bin/bullet-list.tex \
@@ -242,11 +233,49 @@ md2pdf() {
         -o "$2"
 }
 # }}}
+minpdf() {
+    input="$1";
+    output="$2";
+    # native
+    dpi=226
+    #dpi=72
+    declare opts=(
+        -dNOPAUSE
+        -dBATCH
+        -dSAFER
+        -sDEVICE=pdfwrite
+        -dCompatibilityLevel=1.4
+        -dPDFSETTINGS=/ebook
+        -dDetectDuplicateImages
+        -dPrinted=false
+        -dEmbedAllFonts=false
+        -dSubsetFonts=true
+        -dColorImageDownsampleType=/Bicubic
+        -dColorImageResolution=$dpi
+        #-sColorConversionStrategy=Gray
+        -dGrayImageDownsampleType=/Bicubic
+        -dGrayImageResolution=$dpi
+        -dMonoImageDownsampleType=/Bicubic
+        -dMonoImageResolution=$dpi
+        -dColorImageCompression=/Flate
+        -dGrayImageCompression=/Flate
+        -dMonoImageCompression=/Flate
+        -dAutoFilterColorImages=false
+        -dAutoFilterGrayImages=false
+        -dAutoFilterMonoImages=false
+        -dUseCIEColor=false
+        -dOptimize=true
+        -sOutputFile=$output
+        $input
+    )
+    gs ${opts[*]}
+}
 
 # WSL
 #alias p='/mnt/c/Program\ Files/PowerShell/7/pwsh.exe'
-#alias e='/mnt/c/Windows/explorer.exe .'
+#alias thunar='/mnt/c/Windows/explorer.exe .' # Use name for muscle memory
 #alias npp='/mnt/c/Program\ Files/Notepad++/notepad++.exe'
+#alias xl='/mnt/c/Program\ Files/Microsoft\ Office/root/Office16/EXCEL.EXE'
 #alias wsl='' # Noop to avoid muscle memory errors
 #wmv() {
 #    temp="$(mktemp -d -p /mnt/c/Users/v-elajones/AppData/Local/Temp/)";
