@@ -4,10 +4,11 @@
 	helper = store
 [user]
 	useConfigOnly = true
-	email = 133198355+elainajones@users.noreply.github.com 
+	email = 133198355+elainajones@users.noreply.github.com
 	name = Elaina Jones
 	signingKey = 42A1B190F99555C1
 [alias]
+    b=branch
     lg = log --color --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     co=checkout
     s=status
@@ -31,6 +32,7 @@
     }; f"
     # overrides via shell function: https://stackoverflow.com/a/79212558/519360
     alias-diff = difftool
+    alias-clone = clone --recurse-submodules
 [commit]
 	gpgSign = true
 [init]
