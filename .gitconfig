@@ -38,8 +38,7 @@
 [init]
 	defaultBranch = main
 [core]
-    # Disable in favor of gitattributes
-	autocrlf = false
+	autocrlf = input
     # Enforce defaults
 	excludesFile = ~/.config/git/ignore
     attributesFile = ~/.config/git/attributes
