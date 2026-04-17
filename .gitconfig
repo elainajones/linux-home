@@ -26,8 +26,7 @@
     }; f"
 	serve = !"f() { \
         project_root_dir=$(basename `git rev-parse --show-toplevel`); \
-        myip=$(ip -4 -o -br a | grep -oP '(?<=UP).+?(?=/)' | tr -d ' \n'); \
-        echo \"serving git://${myip}/${project_root_dir}\"; \
+        echo \"git clone git://localhost/ ${project_root_dir}\"; \
         git daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/; \
     }; f"
     # overrides via shell function: https://stackoverflow.com/a/79212558/519360
