@@ -11,10 +11,10 @@
     b=branch
     lg = log --color --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     co=checkout
+    b=branch
     s=status
     shove=push -f
     aa=commit --amend --author="Elaina Jones <133198355+elainajones@users.noreply.github.com>"
-    rmc=rm --cached -r
     diff-file-last-commit = "!f() { \
         project_root_dir=$(git rev-parse --show-toplevel); \
         echo finding full file path of $1 in $project_root_dir; \
@@ -31,7 +31,6 @@
         git daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/; \
     }; f"
     # overrides via shell function: https://stackoverflow.com/a/79212558/519360
-    alias-diff = difftool
     alias-clone = clone --recurse-submodules
 [commit]
 	gpgSign = true
@@ -39,6 +38,7 @@
 	defaultBranch = main
 [core]
 	autocrlf = input
+    safecrlf = true
     # Enforce defaults
 	excludesFile = ~/.config/git/ignore
     attributesFile = ~/.config/git/attributes
