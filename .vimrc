@@ -103,7 +103,12 @@ highlight GitGutterChangeDelete ctermbg=NONE guibg=NONE "ctermfg=4
 " }}}
 " Ale {{{
 let g:ale_lint_delay=0
-let g:ale_linters = {'python': ['pylint', 'flake8'], 'bash': ['cspell']}
+let g:ale_linters = {'python': ['pylint', 'flake8'], 'bash': ['cspell'], 'powershell': ['psscriptanalyzer']}
+augroup file_types
+    autocmd!
+    " Fix filetypes so Ale knows to lint them
+    autocmd BufRead,BufNewFile *.ps1 set filetype=powershell
+augroup END
 
 let g:ale_python_flake8_options="--ignore E501,F403,F405,E722"
 let g:ale_python_pylint_options="--jobs 4 -E --disable E0401"
@@ -257,5 +262,5 @@ let save_cursor = getpos(".")
 endfun
 augroup clean_spaces
     autocmd!
-    autocmd BufWritePre *.py,*.sh,*.robot,*.txt,*.ps1,*.json :call CleanExtraSpaces()
+    autocmd BufWritePre *.py,*.sh,*.robot,*.txt,*.ps1,*.json,*.yml :call CleanExtraSpaces()
 augroup END
