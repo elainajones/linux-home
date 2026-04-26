@@ -1,5 +1,5 @@
 [submodule ".vim/pack/default/start/lightline"]
-	path = .vim/pack/default/start/lightline
+	path = .vim/pack/default/start/lightline.vim
 	url = https://github.com/itchyny/lightline.vim.git
 [submodule ".vim/pack/default/start/gruvbox"]
 	path = .vim/pack/default/start/gruvbox
