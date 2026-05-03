@@ -236,7 +236,7 @@ augroup END
 " Highlight config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Line number highlighting
-highlight LineNr ctermbg=NONE guibg=NONE "ctermfg=darkgrey guifg=darkgrey
+highlight LineNr ctermbg=NONE guibg=NONE ctermfg=darkgrey guifg=darkgrey
 highlight Normal guibg=NONE ctermbg=NONE
 " Cursor highlight
 highlight CursorLinenr ctermbg=NONE cterm=bold guibg=NONE gui=bold
@@ -250,8 +250,10 @@ call matchadd('TrailingWhitespace', '\s\+$', 100)
 " Highlight commas with missing whitespace (for code linting)
 highlight CommaWhiteSpace ctermbg=magenta guibg=pink
 " Verical split
+highlight clear VertSplit
 set fillchars+=vert:\ " Space here to make vertical split invisible
-highlight VertSplit ctermfg=darkgrey ctermbg=NONE guifg=darkgrey guibg=NONE
+highlight VertSplit ctermfg=darkgrey
+highlight FoldColumn ctermfg=darkgrey ctermbg=NONE
 " Spell check highlighting
 highlight clear SpellBad
 highlight SpellBad cterm=underline gui=underline
