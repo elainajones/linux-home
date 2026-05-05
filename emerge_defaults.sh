@@ -17,6 +17,7 @@ declare base=(
     "dev-vcs/git"
     "app-text/dos2unix"
     "dev-util/ctags" # ctags needed for jump to definition in vim
+    "app-shells/pwsh-bin" # for linting in vim: Install-Module -Name PSScriptAnalyzer -Force
     "app-eselect/eselect-python"
     # dev-lang/go
     # Networking
