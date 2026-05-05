@@ -14,7 +14,7 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 # Put your fun stuff here.
-
+source ~/bin/git-prompt.sh
 if [[ -f ~/.bash_aliases ]]; then
 	source ~/.bash_aliases
 fi
@@ -47,3 +47,4 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 export GIT_EDITOR=vim
 export GPG_TTY=$(tty)
+export PS1='\[\e[01;32m\]\u@\h\[\e[01;34m\] \w$(__git_ps1 " (%s)") \$\[\e[00m\] '
