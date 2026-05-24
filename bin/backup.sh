@@ -5,6 +5,9 @@ if ! mountpoint boot/; then
     exit 1;
 fi
 
+# Make sure root filesystem is writable.
+mount -o remount,rw /
+
 root_dirs=($(find -maxdepth 1 -mindepth 1 -type d,l \
     ! -name 'dev' \
     ! -name 'proc' \
