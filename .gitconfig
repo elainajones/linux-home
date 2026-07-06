@@ -1,20 +1,77 @@
 [credential]
+    # Piggyback off the Windows git credential manager (example for Azure DevOps)
+    # This is the best method but can be slower than tokens or SSH.
+	helper = "/mnt/c/Progra~1/Git/mingw64/bin/git-credential-manager.exe"
+	azreposCredentialType = oauth
+    useHttpPath = true
     # Might be needed for Windows to force use of .git-credentials
     # if ssh key auth is not permitted by policy.
-	helper = store
+	# helper = store
 [user]
 	useConfigOnly = true
 	email = 133198355+elainajones@users.noreply.github.com
 	name = Elaina Jones
 	signingKey = 42A1B190F99555C1
+[core]
+	autocrlf = input
+    safecrlf = true
+    # Enforce defaults
+	excludesFile = ~/.config/git/ignore
+    attributesFile = ~/.config/git/attributes
+
+[checkout]
+	workers = 0
+[fetch]
+	parallel = 0
+[submodule]
+	fetchJobs = 0
+
+[init]
+	defaultBranch = main
+[commit]
+	gpgSign = true
+[clean]
+   requireForce = true
+[merge]
+	tool = vimdiff1
+
+[branch]
+	sort = -creatordate
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+
 [alias]
     b=branch
     lg = log --color --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     co=checkout
-    b=branch
     s=status
     shove=push -f
     aa=commit --amend --author="Elaina Jones <133198355+elainajones@users.noreply.github.com>"
+    uptag = "!f() { \
+        git tag -d \"$1\"; \
+        git tag \"$1\"; \
+        git push --force origin --tag \"$1\"; \
+      }; f"
+    detag = "!f() { \
+        git tag -d \"$1\"; \
+        git push origin --delete \"$1\"; \
+      }; f"
+    retag = "!f() { \
+        if [ \"$#\" -lt 2 ]; then \
+            echo \"Usage: git retag old new\"; \
+            exit 1; \
+        fi; \
+        git tag \"$2\" \"$1\"; \
+        git tag -d \"$1\"; \
+        git push origin \"$2\" :\"$1\"; \
+      }; f"
+	serve = "!f() { \
+        project_root_dir=$(basename `git rev-parse --show-toplevel`); \
+        echo \"git clone git://localhost/ ${project_root_dir}\"; \
+        git daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/; \
+    }; f"
     diff-file-last-commit = "!f() { \
         project_root_dir=$(git rev-parse --show-toplevel); \
         echo finding full file path of $1 in $project_root_dir; \
@@ -29,29 +86,25 @@
         echo \"git clone git://localhost/ ${project_root_dir}\"; \
         git daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/; \
     }; f"
+    # Workarounds for renormalizing EOL
+	rebase-eol = "!f() { \
+        git diff --name-only | \
+        awk -F. 'NF>1 {print \"*.\" $NF \" -text\"}' | \
+        sort -u > .git/info/attributes; \
+        git rebase -X ignore-all-space \"$@\"; \
+        rm $(git rev-parse --show-toplevel)/.git/info/attributes; \
+    }; f"
+	pull-eol = "!f() { \
+        git diff --name-only | \
+        awk -F. 'NF>1 {print \"*.\" $NF \" -text\"}' | \
+        sort -u > .git/info/attributes; \
+        git pull \"$@\"; \
+        rm $(git rev-parse --show-toplevel)/.git/info/attributes; \
+    }; f"
+    ignore-eol = "!f() { \
+        git diff --name-only | \
+        awk -F. 'NF>1 {print \"*.\" $NF \" -text\"}' | \
+        sort -u > .git/info/attributes; \
+    }; f"
     # overrides via shell function: https://stackoverflow.com/a/79212558/519360
     alias-clone = clone --recurse-submodules
-[commit]
-	gpgSign = true
-[init]
-	defaultBranch = main
-[core]
-	autocrlf = input
-    safecrlf = true
-    # Enforce defaults
-	excludesFile = ~/.config/git/ignore
-    attributesFile = ~/.config/git/attributes
-[merge]
-	tool = vimdiff1
-[diff]
-	tool = vimdiff
-[difftool]
-	prompt = false
-[submodule]
-	fetchJobs = 0
-[fetch]
-	parallel = 0
-[checkout]
-	workers = 0
-[branch]
-	sort = -creatordate
