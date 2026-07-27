@@ -50,6 +50,10 @@
     s=status
     shove=push -f
     aa=commit --amend --author="Elaina Jones <133198355+elainajones@users.noreply.github.com>"
+    zip = "!f() { \
+        project_root_dir=$(basename `git rev-parse --show-toplevel`); \
+        git archive --format=zip -o ${project_root_dir}.zip HEAD; \
+      }; f"
     uptag = "!f() { \
         git tag -d \"$1\"; \
         git tag \"$1\"; \
@@ -81,11 +85,6 @@
         last_modified_commit_hash=$(git rev-list -1 HEAD $filepath); \
         echo last commit file modified $last_modified_commit_hash; \
         git difftool $last_modified_commit_hash^ $filepath; \
-    }; f"
-    serve = !"f() { \
-        project_root_dir=$(basename `git rev-parse --show-toplevel`); \
-        echo \"git clone git://localhost/ ${project_root_dir}\"; \
-        git daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/; \
     }; f"
     # Workarounds for renormalizing EOL
     rebase-eol = "!f() { \
