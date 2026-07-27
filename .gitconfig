@@ -1,47 +1,47 @@
 [credential]
     # Piggyback off the Windows git credential manager (example for Azure DevOps)
     # This is the best method but can be slower than tokens or SSH.
-	helper = "/mnt/c/Progra~1/Git/mingw64/bin/git-credential-manager.exe"
-	azreposCredentialType = oauth
+    helper = "/mnt/c/Progra~1/Git/mingw64/bin/git-credential-manager.exe"
+    azreposCredentialType = oauth
     useHttpPath = true
     # Might be needed for Windows to force use of .git-credentials
     # if ssh key auth is not permitted by policy.
-	# helper = store
+    # helper = store
 [user]
-	useConfigOnly = true
-	email = 133198355+elainajones@users.noreply.github.com
-	name = Elaina Jones
-	signingKey = 42A1B190F99555C1
+    useConfigOnly = true
+    email = 133198355+elainajones@users.noreply.github.com
+    name = Elaina Jones
+    signingKey = 42A1B190F99555C1
 [core]
-	autocrlf = input
+    autocrlf = input
     safecrlf = true
-	excludesFile = ~/.config/git/ignore
+    excludesFile = ~/.config/git/ignore
     attributesFile = ~/.config/git/attributes
     editor = vim
 
 [checkout]
-	workers = 0
+    workers = 0
 [fetch]
-	parallel = 0
+    parallel = 0
 [submodule]
-	fetchJobs = 0
+    fetchJobs = 0
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [commit]
-	gpgSign = true
+    gpgSign = true
     template = ~/.config/git/message.txt
 [clean]
    requireForce = false
 [merge]
-	tool = vimdiff1
+    tool = vimdiff1
 
 [branch]
-	sort = -creatordate
+    sort = -creatordate
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [difftool]
-	prompt = false
+    prompt = false
 
 [alias]
     b=branch
@@ -68,7 +68,7 @@
         git tag -d \"$1\"; \
         git push origin \"$2\" :\"$1\"; \
       }; f"
-	serve = "!f() { \
+    serve = "!f() { \
         project_root_dir=$(basename `git rev-parse --show-toplevel`); \
         echo \"git clone git://localhost/ ${project_root_dir}\"; \
         git daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/; \
@@ -82,20 +82,20 @@
         echo last commit file modified $last_modified_commit_hash; \
         git difftool $last_modified_commit_hash^ $filepath; \
     }; f"
-	serve = !"f() { \
+    serve = !"f() { \
         project_root_dir=$(basename `git rev-parse --show-toplevel`); \
         echo \"git clone git://localhost/ ${project_root_dir}\"; \
         git daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/; \
     }; f"
     # Workarounds for renormalizing EOL
-	rebase-eol = "!f() { \
+    rebase-eol = "!f() { \
         git diff --name-only | \
         awk -F. 'NF>1 {print \"*.\" $NF \" -text\"}' | \
         sort -u > .git/info/attributes; \
         git rebase -X ignore-all-space \"$@\"; \
         rm $(git rev-parse --show-toplevel)/.git/info/attributes; \
     }; f"
-	pull-eol = "!f() { \
+    pull-eol = "!f() { \
         git diff --name-only | \
         awk -F. 'NF>1 {print \"*.\" $NF \" -text\"}' | \
         sort -u > .git/info/attributes; \
