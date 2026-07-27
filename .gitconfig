@@ -15,9 +15,9 @@
 [core]
 	autocrlf = input
     safecrlf = true
-    # Enforce defaults
 	excludesFile = ~/.config/git/ignore
     attributesFile = ~/.config/git/attributes
+    editor = vim
 
 [checkout]
 	workers = 0
@@ -30,6 +30,7 @@
 	defaultBranch = main
 [commit]
 	gpgSign = true
+    template = ~/.config/git/message.txt
 [clean]
    requireForce = false
 [merge]
