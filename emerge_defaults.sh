@@ -18,6 +18,7 @@ declare base=(
     "app-text/dos2unix"
     "dev-util/ctags" # ctags needed for jump to definition in vim
     "app-shells/pwsh-bin" # for linting in vim: Install-Module -Name PSScriptAnalyzer -Force
+    "dev-python/bashate" # Bash linting in vim
     "app-eselect/eselect-python"
     # dev-lang/go
     # Networking
@@ -90,10 +91,10 @@ declare desktop=(
 args=()
 case $1 in
     base)
-         args=(${base[@]})
+        args=(${base[@]})
         ;;
     desktop)
-         args=(${desktop[@]})
+        args=(${desktop[@]})
         ;;
     *)
         exit

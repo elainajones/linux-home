@@ -83,7 +83,7 @@ nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
 " }}}
 " Ale {{{
 let g:ale_lint_delay=0
-let g:ale_linters = {'python': ['pylint', 'flake8'], 'bash': ['cspell'], 'powershell': ['psscriptanalyzer']}
+let g:ale_linters = {'python': ['pylint', 'flake8'], 'sh': ['bashate'], 'powershell': ['psscriptanalyzer']}
 " Manual fix for filetypes not set with :filetypes=on
 augroup file_types
     autocmd!
@@ -92,7 +92,7 @@ augroup file_types
 augroup END
 
 let g:ale_python_flake8_options="--ignore E501,F403,F405,E722"
-let g:ale_python_pylint_options="--jobs 4 -E --disable E0401"
+let g:ale_python_pylint_options="--jobs 0 --disable=all --enable=E,C --disable E0401"
 " Enable if performance is poor
 let g:ale_linters_explicit = 1
 let g:ale_lint_on_enter = 1
@@ -306,5 +306,5 @@ let save_cursor = getpos(".")
 endfun
 augroup clean_spaces
     autocmd!
-    autocmd BufWritePre *.py,*.sh,*.robot,*.txt,*.ps1,*.json,*.yml :call CleanExtraSpaces()
+    autocmd BufWritePre *.py,*.sh,*.robot,*.txt,*.ps1,*.json,*.yml,*.yaml,*.bas :call CleanExtraSpaces()
 augroup END
