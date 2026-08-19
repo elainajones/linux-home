@@ -54,6 +54,10 @@
         project_root_dir=$(basename `git rev-parse --show-toplevel`); \
         git archive --format=zip -o ${project_root_dir}.zip HEAD; \
       }; f"
+    tar= "!f() { \
+        project_root_dir=$(basename `git rev-parse --show-toplevel`); \
+        git archive --format=tgz -o ${project_root_dir}.tgz HEAD; \
+      }; f"
     uptag = "!f() { \
         git tag -d \"$1\"; \
         git tag \"$1\"; \
