@@ -270,6 +270,9 @@ minpdf() {
     )
     gs ${opts[*]}
 }
+setgov() {
+    echo "$1" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+}
 
 # WSL
 #alias p='/mnt/c/Program\ Files/PowerShell/7/pwsh.exe'
