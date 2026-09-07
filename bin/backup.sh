@@ -24,11 +24,15 @@ rm -rf var/cache/*
 
 time tar --exclude='var/lib/libvirt/images' \
     --exclude='usr/src' \
+    --exclude='usr/share/icons/*' \
+    --exclude='*\.tmp' \
+    --exclude='*\.bak' \
     --exclude='tmp/*' \
     --exclude='var/tmp/*' \
     --exclude='__pycache__/*' \
     --exclude='*\.iso' \
     --exclude='var/*\.log' \
+    --exclude='\.tmp-unverified-download-quarantine/*' \
     --exclude-vcs \
     -cvf $(cat etc/hostname)-rootfs-$(date +%Y%m%d).tar \
     ${root_dirs[*]} swapfile
