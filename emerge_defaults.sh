@@ -50,8 +50,8 @@ declare base=(
 
 declare desktop=(
     # Fonts
+    "media-fonts/libertine"
     "media-fonts/joypixels"
-    "media-fonts/noto"
     "media-fonts/noto-cjk"
     "media-fonts/noto-emoji"
     "media-fonts/fontawesome"
@@ -85,7 +85,7 @@ declare desktop=(
     # "xfce-extra/xfce4-screenshooter"
     # "xfce-extra/xfce4-systemload-plugin"
     # "xfce-extra/xfce4-taskmanager"
-    # "gnome-extra/nm-applet"
+    "gnome-extra/nm-applet"
 )
 
 args=()
