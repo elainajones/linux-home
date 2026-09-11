@@ -26,6 +26,7 @@ time tar --exclude='var/lib/libvirt/images' \
     --exclude='usr/src' \
     --exclude='usr/share/icons/*' \
     --exclude='*\.tmp' \
+    --exclude='root/\.cache/' \
     --exclude='*\.bak' \
     --exclude='tmp/*' \
     --exclude='var/tmp/*' \
