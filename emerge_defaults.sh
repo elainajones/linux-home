@@ -1,5 +1,17 @@
 #! /usr/bin/env bash
 
+declare developer=(
+    # Developer tools
+    "app-vim/gnupg"
+    "app-editors/vim"
+    "dev-vcs/git"
+    "app-text/dos2unix"
+    "dev-util/ctags" # ctags needed for jump to definition in vim
+    "app-shells/pwsh-bin" # for linting in vim: Install-Module -Name PSScriptAnalyzer -Force
+    "dev-python/bashate" # Bash linting in vim
+    "app-eselect/eselect-python"
+)
+
 declare base=(
     # Filesystems
     "net-fs/cifs-utils"
@@ -11,15 +23,6 @@ declare base=(
     # Archive tools
     "app-arch/unzip"
     "app-arch/zip"
-    # Developer tools
-    "app-vim/gnupg"
-    "app-editors/vim"
-    "dev-vcs/git"
-    "app-text/dos2unix"
-    "dev-util/ctags" # ctags needed for jump to definition in vim
-    "app-shells/pwsh-bin" # for linting in vim: Install-Module -Name PSScriptAnalyzer -Force
-    "dev-python/bashate" # Bash linting in vim
-    "app-eselect/eselect-python"
     # dev-lang/go
     # Networking
     "net-analyzer/netcat"
@@ -63,7 +66,7 @@ declare desktop=(
     "app-dicts/myspell-en"
     # Web
     "www-client/firefox"
-    "www-client/google-chrome"
+    "www-client/chromium"
     # Multimedia
     "app-text/atril"
     "app-office/libreoffice"
@@ -74,17 +77,17 @@ declare desktop=(
     "media-gfx/inkscape"
     "app-text/pdfarranger"
     # XFCE
-    # "x11-misc/redshift"
-    # "x11-themes/numix-gtk-theme"
-    # "xfce-base/xfce4-meta"
-    # "xfce-extra/xfce4-battery-plugin"
-    # "xfce-extra/xfce4-clipman-plugin"
-    # "xfce-extra/xfce4-cpufreq-plugin"
-    # "xfce-extra/xfce4-cpugraph-plugin"
-    # "xfce-extra/xfce4-notifyd"
-    # "xfce-extra/xfce4-screenshooter"
-    # "xfce-extra/xfce4-systemload-plugin"
-    # "xfce-extra/xfce4-taskmanager"
+    "x11-misc/redshift"
+    "x11-themes/numix-gtk-theme"
+    "xfce-base/xfce4-meta"
+    "xfce-extra/xfce4-battery-plugin"
+    "xfce-extra/xfce4-clipman-plugin"
+    "xfce-extra/xfce4-cpufreq-plugin"
+    "xfce-extra/xfce4-cpugraph-plugin"
+    "xfce-extra/xfce4-notifyd"
+    "xfce-extra/xfce4-screenshooter"
+    "xfce-extra/xfce4-systemload-plugin"
+    "xfce-extra/xfce4-taskmanager"
     "gnome-extra/nm-applet"
 )
 
@@ -95,6 +98,9 @@ case $1 in
         ;;
     desktop)
         args=(${desktop[@]})
+        ;;
+    dev)
+        args=(${developer[@]})
         ;;
     *)
         exit
