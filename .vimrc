@@ -265,7 +265,7 @@ highlight Folded ctermbg=NONE guibg=NONE
 augroup commit_highlight
     autocmd!
     highlight ConventionalCommits ctermbg=magenta
-    autocmd FileType gitcommit call matchadd('ConventionalCommits', '\%^\(\(fix\|feat\|build\|chore\|ci\|docs\|style\|refactor\|perf\|test\)\>\)\@!.*:', 100)
+    autocmd FileType gitcommit call matchadd('ConventionalCommits', '\%^\(\(fix\|feat\|build\|chore\|ci\|docs\|style\|refactor\|revert\|perf\|test\)\>\)\@!.*:', 100)
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
